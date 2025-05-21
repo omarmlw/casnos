@@ -2,46 +2,56 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>حساب اشتراك كاسنوس</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@500;700&display=swap" rel="stylesheet">
   <style>
+    * {
+      box-sizing: border-box;
+    }
     body {
       font-family: 'Tajawal', sans-serif;
       background-color: #e0f7fa;
       margin: 0;
-      padding: 20px;
+      padding: 0;
       text-align: center;
       color: #01579b;
     }
+    .container {
+      padding: 20px;
+      max-width: 500px;
+      margin: auto;
+    }
     h2 {
       color: #0277bd;
+      margin-bottom: 20px;
     }
-    select, input, button {
-      padding: 10px;
-      margin: 10px;
+    select, input, .btn {
+      width: 100%;
+      padding: 14px;
+      margin: 10px 0;
       border-radius: 10px;
       border: 1px solid #81d4fa;
       font-size: 18px;
     }
-    button {
+    .btn {
       cursor: pointer;
       background-color: #4fc3f7;
       color: white;
       border: none;
       transition: background 0.3s;
     }
-    button:hover {
+    .btn:hover {
       background-color: #039be5;
     }
     #resultToSave {
       background: #ffffff;
       padding: 20px;
-      margin: 20px auto;
-      width: fit-content;
+      margin-top: 20px;
       border-radius: 15px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      font-size: 22px;
+      font-size: 20px;
       color: #006064;
       display: none;
     }
@@ -50,41 +60,35 @@
       font-size: 14px;
       color: #666;
     }
-    @media (max-width: 600px) {
-      input, select, button {
-        width: 90%;
-      }
-    }
   </style>
 </head>
 <body>
 
-  <h2>حساب اشتراك كاسنوس</h2>
+  <div class="container">
+    <h2>حساب اشتراك كاسنوس</h2>
 
-  <label for="category">اختر الفئة:</label>
-  <select id="category">
-    <option value="5">بيع و إنتاج سلع (5%)</option>
-    <option value="12">مقدمو الخدمات (12%)</option>
-    <option value="auto">المقاول الذاتي</option>
-  </select><br>
+    <select id="category">
+      <option value="5">بيع و إنتاج سلع (5%)</option>
+      <option value="12">مقدمو الخدمات (12%)</option>
+      <option value="auto">المقاول الذاتي</option>
+    </select>
 
-  <label for="amount">رقم الأعمال (دج):</label><br>
-  <input type="number" id="amount" placeholder="أدخل رقم الأعمال"><br>
+    <input type="number" id="amount" placeholder="أدخل رقم الأعمال (دج)">
 
-  <button onclick="calculate()">حساب</button>
-  <button onclick="clearResult()">مسح</button>
-  <button onclick="saveResult()">حفظ النتيجة كصورة</button>
+    <button class="btn" onclick="calculate()">حساب</button>
+    <button class="btn" onclick="clearResult()">مسح</button>
+    <button class="btn" onclick="saveResult()">حفظ النتيجة كصورة</button>
 
-  <div id="resultToSave">
-    <div id="resultText"></div>
-    <div class="footer">
-      <div id="todayDate"></div>
-      <div>By OMAR © <span id="year"></span></div>
+    <div id="resultToSave">
+      <div id="resultText"></div>
+      <div class="footer">
+        <div id="todayDate"></div>
+        <div>By OMAR © <span id="year"></span></div>
+      </div>
     </div>
   </div>
 
   <script>
-    // دالة الحساب
     function calculate() {
       const category = document.getElementById("category").value;
       const amount = parseFloat(document.getElementById("amount").value);
@@ -109,7 +113,6 @@
         resultText.innerHTML = "يرجى إدخال رقم أعمال صحيح.";
       }
 
-      // عرض التاريخ والسنة الحالية
       const today = new Date();
       const dateStr = today.toLocaleDateString('ar-DZ', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
       todayDate.innerText = `التاريخ: ${dateStr}`;
@@ -118,7 +121,6 @@
       resultDiv.style.display = "block";
     }
 
-    // دالة المسح
     function clearResult() {
       document.getElementById("amount").value = "";
       document.getElementById("resultText").innerHTML = "";
@@ -126,7 +128,6 @@
       document.getElementById("resultToSave").style.display = "none";
     }
 
-    // دالة حفظ الصورة
     function saveResult() {
       const resultDiv = document.getElementById("resultToSave");
       if (resultDiv.style.display === "block") {
@@ -139,5 +140,6 @@
       }
     }
   </script>
+
 </body>
 </html>
